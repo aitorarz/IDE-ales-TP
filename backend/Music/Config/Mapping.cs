@@ -2,6 +2,8 @@
 using Music.Models.Album.DTO;
 using Music.Models.Artist;
 using Music.Models.Artist.DTO;
+using Music.Models.Auth.User;
+using Music.Models.Auth.User.DTO;
 using Music.Models.Genre;
 using Music.Models.Genre.DTO;
 using Music.Models.Song;
@@ -15,6 +17,7 @@ namespace Music.Config
             // Defaults
             CreateMap<int?, int>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<string?, string>().ConvertUsing((src, dest) => src ?? dest);
+            CreateMap<bool?, bool>().ConvertUsing((src, dest) => src ?? dest);
 
             //Entities
             CreateMap<CreateOrUpdateGenreDTO, Genre>();
@@ -26,6 +29,15 @@ namespace Music.Config
 
             CreateMap<CreateAlbumDTO, Song>();
             CreateMap<UpdateAlbumDTO, Song>();
+
+            //Auth
+
+            CreateMap<RegisterDTO, User>();
+
+            CreateMap<User, UserWithoutPassDTO>().ForMember(
+                dest => dest.Roles,
+                opt => opt.MapFrom(e => e.Roles.Select(x => x.Name).ToList())
+                );
         }
     }
 }

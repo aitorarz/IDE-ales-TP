@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Music.Models.Album;
 using Music.Models.Artist;
+using Music.Models.Auth.Role;
+using Music.Models.Auth.User;
 using Music.Models.Genre;
 using Music.Models.Song;
 using System.Data;
@@ -14,6 +16,9 @@ namespace Music.Config
         public DbSet<Artist> Artist { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Song> Songs { get; set; }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +39,18 @@ namespace Music.Config
                 .WithMany(a => a.Songs)
                 .UsingEntity(j => j.ToTable("SongAlbums"));
 
+
+            modelBuilder.Entity<User>().HasIndex(x => x.UserName).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
+            modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Roles)
+                .WithMany()
+                .UsingEntity<UserRoles>(
+                    l => l.HasOne<Role>().WithMany().HasForeignKey(x => x.RoleId),
+                    r => r.HasOne<User>().WithMany().HasForeignKey(x => x.UserId)
+                );
 
 
             //modelBuilder.Entity<Song>()
