@@ -38,8 +38,8 @@ builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Auth API",
-        Description = "An ASP.NET Core Web Api for managing Auth"
+        Title = "Music API",
+        Description = "An ASP.NET Core Web Api for managing Songs and Users alike."
     });
 
     options.AddSecurityDefinition("Token", new OpenApiSecurityScheme()

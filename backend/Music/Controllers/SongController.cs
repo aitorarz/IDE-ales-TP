@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Music.Models.Genre.DTO;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Music.Enums;
 using Music.Models.Genre;
-using Music.Services;
-using Music.Utils;
+using Music.Models.Genre.DTO;
 using Music.Models.Song;
 using Music.Models.Song.DTO;
+using Music.Services;
+using Music.Utils;
 
 namespace Music.Controllers
 {
@@ -66,6 +68,7 @@ namespace Music.Controllers
             }
 
             [HttpPost("crear")]
+            [Authorize(Roles = $"{ROLE.MOD}, {ROLE.ADMIN}")]
             [ProducesResponseType(typeof(Song), StatusCodes.Status201Created)]
             [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
             [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
@@ -93,6 +96,7 @@ namespace Music.Controllers
             }
 
             [HttpDelete("eliminar/{id}")]
+            [Authorize(Roles = $"{ROLE.MOD}, {ROLE.ADMIN}")]
             [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status200OK)]
             [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
             [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
@@ -120,6 +124,7 @@ namespace Music.Controllers
             }
 
             [HttpPut("actualizar/{id}")]
+            [Authorize(Roles = $"{ROLE.MOD}, {ROLE.ADMIN}")]
             [ProducesResponseType(typeof(Song), StatusCodes.Status200OK)]
             [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
             [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]

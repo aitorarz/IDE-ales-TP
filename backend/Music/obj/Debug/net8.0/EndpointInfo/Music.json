@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Auth API",
-    "description": "An ASP.NET Core Web Api for managing Auth",
+    "title": "Music API",
+    "description": "An ASP.NET Core Web Api for managing Songs and Users alike.",
     "version": "v1"
   },
   "paths": {
